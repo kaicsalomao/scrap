@@ -15,7 +15,7 @@ jobs:
         os: [windows, linux, darwin]
         arch: [amd64, arm64]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Go
       uses: actions/setup-go@v4
@@ -26,8 +26,7 @@ jobs:
       env:
         GOOS: linux
         GOARCH: arm64
-        GOBIN: ${{ github.workspace }}/bin/${{ matrix.os }}-${{ matrix.arch }}
-      run: go build -v -o bin/${{ matrix.os }}-${{ matrix.arch }} ./...
+      run: go build -v -o bin/linux-arm64 ./...
 
 
     - name: Zip
