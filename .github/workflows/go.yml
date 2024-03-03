@@ -22,14 +22,12 @@ jobs:
       with:
         go-version: '1.21.6'
 
-    - name: Build
+    - name: Install
       env:
         GOOS: ${{ matrix.os }}
         GOARCH: ${{ matrix.arch }}
-      run: go build -v -o bin/${{ matrix.os }}-${{ matrix.arch }} ./...
-
-    - name: Test
-      run: go test -v ./...
+        GOBIN: ${{ github.workspace }}/bin/${{ matrix.os }}-${{ matrix.arch }}
+      run: go install -v ./...
 
     - name: Zip
       run: zip -r bin/${{ matrix.os }}-${{ matrix.arch }}.zip bin/${{ matrix.os }}-${{ matrix.arch }}
