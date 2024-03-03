@@ -24,7 +24,7 @@ jobs:
       env:
         GOOS: windows
         GOARCH: ${{ matrix.arch }}
-      if: "${{ matrix.os }} == 'windows latest' && ${{ matrix.arch}} != 'arm64'"
+      if: ${{ matrix.os }} == "windows latest" && ${{ matrix.arch}} != "arm64"
       run: |
           go build -v -o ${{ matrix.os }}-${{ matrix.arch }}.exe
       shell: pwsh
@@ -33,19 +33,19 @@ jobs:
       env:
         GOOS: linux
         GOARCH: ${{ matrix.arch }}
-      if: "${{ matrix.os }} == 'ubuntu-latest'"
+      if: ${{ matrix.os }} == "ubuntu-latest"
       run: |
         go build -v -o ${{ matrix.os }}-${{ matrix.arch }}
       shell: bash
         
     - name: Zip Windows
-      if: "${{ matrix.os }} == 'windows-latest'"
+      if: ${{ matrix.os }} == "windows-latest"
       run: |
         7z a -r ${{ matrix.os }}-${{ matrix.arch }}.zip ${{ matrix.os }}-${{ matrix.arch }}.exe
       shell: pwsh
 
     - name: Zip Linux
-      if: "${{ matrix.os }} == 'ubuntu-latest'"
+      if: ${{ matrix.os }} == "ubuntu-latest"
       run: |
         zip -r ${{ matrix.os }}-${{ matrix.arch }}.zip ${{ matrix.os }}-${{ matrix.arch }}
       shell: bash
