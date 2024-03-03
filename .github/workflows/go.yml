@@ -9,58 +9,25 @@ on:
 jobs:
 
   build:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [linux]
         arch: [arm64, amd64]
-    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-go@v5
       with:
         go-version: '1.21.6'
         
-    - name: Build for Windows
-      if: ${{ matrix.os }} == "windows-latest" && ${{ matrix.arch }} == "arm64"
+    - name: Build
       env:
-        GOOS: windows
-        GOARCH: amd64
-      run: |
-          go build -v -o ${{ matrix.os }}-${{ matrix.arch }}.exe
-      shell: pwsh
-
-    - name: Build for Linux
-      if: ${{ matrix.os }} == "ubuntu-latest"
-      env:
-        GOOS: linux
+        GOOS: ${{ matrix.os }}
         GOARCH: ${{ matrix.arch }}
-      run: |
-        go build -v -o ${{ matrix.os }}-${{ matrix.arch }}
-      shell: bash
-        
-    - name: Zip for Windows
-      if: ${{ matrix.os }} == "windows-latest" && ${{ matrix.arch }} == "amd64"
-      run: |
-        7z a -r ${{ matrix.os }}-${{ matrix.arch }}.zip ${{ matrix.os }}-${{ matrix.arch }}.exe
-      shell: pwsh
+      run: go build -v -o scrap
 
-    - name: Zip for Linux
-      if: ${{ matrix.os }} == "ubuntu-latest"
-      run: |
-        zip -r ${{ matrix.os }}-${{ matrix.arch }}.zip ${{ matrix.os }}-${{ matrix.arch }}
-      shell: bash
-
-    - name: Upload Windows artifact
-      if: ${{ matrix.os }} == "windows-latest" && ${{ matrix.arch }} == "amd64"
+    - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: scrap-${{ matrix.os }}-${{ matrix.arch }}
-        path: ${{ matrix.os }}-${{ matrix.arch }}.zip
-        
-    - name: Upload Linux artifact
-      if: ${{ matrix.os }} == "ubuntu-latest" 
-      uses: actions/upload-artifact@v4
-      with:
-        name: scrap-${{ matrix.os }}-${{ matrix.arch }}
-        path: ${{ matrix.os }}-${{ matrix.arch }}.zip
-      
+        name: scrap-${{ matrix.arch }}
+        path: scrap
