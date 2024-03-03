@@ -1,3 +1,3 @@
-module scraping-go
+module scrap
 
 go 1.21.6

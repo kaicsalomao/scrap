@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"scraping-go/engine"
+	"scrap/engine"
 )
 
 func main() {
