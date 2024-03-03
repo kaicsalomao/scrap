@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [linux, android]
-        arch: [arm64, amd64, arm]
+        arch: [arm64, amd64]
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-go@v5
