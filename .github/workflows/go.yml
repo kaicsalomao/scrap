@@ -12,8 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [linux, windows-latest]
-        arch: [arm64, amd64]
+        platform: [linux/arm64, linux/amd64 windows/amd64]
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-go@v5
