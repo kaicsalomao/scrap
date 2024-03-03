@@ -1,5 +1,5 @@
 <div width="100%" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
-    <img src="imgs/logo"/>
+    <img src="imgs/logo.svg"/>
     <h2>Scrap</h2>
 </div>
  Scrap é uma ferramenta CLI que permite fazer web scraping diretamente da linha de comando
