@@ -4,7 +4,7 @@
         <h2>Scrap</h2>
         <p><strong>Uma ferramenta CLI que permite fazer web scraping diretamente da linha de comando</strong></p>
         <!-- Latest release -->
-<img src="https://img.shields.io/github/v/release/kaicpro/scrap?include_prereleases&amp;label=latest%20release" alt="Latest release">
+<img src="https://img.shields.io/github/v/release/kaicpro/scrap?include_prereleases&amp;label=latest%20release" alt="Latest release"> 
         <!-- License -->
 <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
 </div>
