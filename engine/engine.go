@@ -48,7 +48,7 @@ func (e Engine) Collect() ([]string, error) {
 	// Coloriza todas as keywords que estao no corpo
 	for _, keyword := range e.keywords {
 		if strings.Contains(string(body), keyword) {
-			body = []byte(strings.ReplaceAll(string(body), keyword, Green+keyword+Reset))
+			body = []byte(strings.ReplaceAll(string(body), keyword, green+keyword+reset))
 		}
 	}
 

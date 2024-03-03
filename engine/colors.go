@@ -1,7 +1,7 @@
 package engine
 
 const (
-	Reset = "\033[0m"
-	Red   = "\033[31m"
-	Green = "\033[32m"
+	reset = "\033[0m"
+	red   = "\033[31m"
+	green = "\033[32m"
 )
