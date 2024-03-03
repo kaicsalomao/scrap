@@ -25,20 +25,21 @@ jobs:
         GOOS: ${{ matrix.os }}
         GOARCH: ${{ matrix.arch }}
       run: |
-        if [ "${{ matrix.os }}" == "windows-latest" ]; then
+        if ("${{ matrix.os }}" -eq "windows-latest") {
           go build -v -o ${{ matrix.os }}-${{ matrix.arch }}.exe
-        else
+        } else {
           go build -v -o ${{ matrix.os }}-${{ matrix.arch }}
-        fi
-
-
+        }
+      shell: pwsh
+        
     - name: Zip
       run: |
-        if [ "${{ matrix.os }}" == "windows-latest" ]; then
+        if ("${{ matrix.os }}" -eq "windows-latest") {
           7z a -r ${{ matrix.os }}-${{ matrix.arch }}.zip ${{ matrix.os }}-${{ matrix.arch }}.exe
-        else
+        } else {
           zip -r ${{ matrix.os }}-${{ matrix.arch }}.zip ${{ matrix.os }}-${{ matrix.arch }}
-        fi
+        }
+      shell: pwsh
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
