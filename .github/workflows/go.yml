@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [linux]
-        arch: [arm64, amd64]
+        os: [linux, android]
+        arch: [arm64, amd64, arm]
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-go@v5
@@ -29,5 +29,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: scrap-linux-${{ matrix.arch }}
+        name: scrap-${{ matrix.os }}-${{ matrix.arch }}
         path: scrap
