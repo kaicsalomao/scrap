@@ -13,18 +13,18 @@ jobs:
     strategy:
       matrix:
         os: [linux]
-        arch: [arm64]
+        arch: [arm64, amd64]
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-go@v5
       with:
         go-version: '1.21.6'
-
+        
     - name: Build arm64
       env:
-        GOOS: linux
-        GOARCH: arm64
-      run: go build -v -o linux-arm64 ./...
+        GOOS: ${{ matrix.os }}
+        GOARCH: ${{ matrix.arch }}
+      run: go build -v -o ${{ matrix.os }}-${{ matrix.arch }}
 
 
     - name: Zip
