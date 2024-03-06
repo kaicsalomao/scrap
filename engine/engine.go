@@ -7,12 +7,13 @@ import (
 	"strings"
 )
 
+// Reprenseta a Engine e sua estrutura de chamada
 type Engine struct {
 	url      string
 	keywords []string
 }
 
-/* Cria um ponteiro para a Engine */
+// Cria um ponteiro para a Engine
 func NewEngine(url string, keywords []string) *Engine {
 	return &Engine{url: url, keywords: keywords}
 }
@@ -30,7 +31,7 @@ func trimSpaces(str string) string {
 	return str
 }
 
-/* Coleta os resultados */
+// Coleta os resultados
 func (e Engine) Collect() ([]string, error) {
 	// Faz a requisicao http
 	response, err := http.Get(e.url)
