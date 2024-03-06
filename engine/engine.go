@@ -13,11 +13,9 @@ type Engine struct {
 }
 
 func NewEngine(url string, keywords []string) *Engine {
-	// Retorna um ponteiro para uma Engine
 	return &Engine{url: url, keywords: keywords}
 }
 
-// Remover os espacos do inicio e do final de uma string
 func trimSpaces(str string) string {
 	// Remover espacos em branco do início da string
 	for len(str) > 0 && str[0] == ' ' {
@@ -30,8 +28,7 @@ func trimSpaces(str string) string {
 	return str
 }
 
-// Coleta os resultados
-func (e Engine) Collect() ([]string, error) {
+func (e Engine) CollectResults() ([]string, error) {
 
 	response, err := http.Get(e.url)
 	if err != nil {
@@ -61,7 +58,6 @@ func (e Engine) Collect() ([]string, error) {
 
 		line := scanner.Text()
 
-		// Verifica se um dos keywords esta na linha
 		for _, keyword := range e.keywords {
 			if strings.Contains(line, keyword) {
 				result = append(result, trimSpaces(line))
