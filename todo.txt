@@ -1,3 +1,0 @@
-O executavel para arm64 não está funcionando corretamente: Verificar o código fonte e fazer alguma possivél solução.
-
-Ter certeza que a contrução 'linux' e 'android' para golang não se diferenciam
