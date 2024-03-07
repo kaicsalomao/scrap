@@ -16,54 +16,59 @@ func NewEngine(url string, keywords []string) *Engine {
 	return &Engine{url: url, keywords: keywords}
 }
 
-func trimSpaces(str string) string {
-	// Remover espacos em branco do início da string
-	for len(str) > 0 && str[0] == ' ' {
-		str = str[1:]
+func (e Engine) CollectResults() ([]string, error) {
+	body, err := e.getBody()
+	if err != nil {
+		return nil, err
 	}
-	// Remover espacos em branco do final da string
-	for len(str) > 0 && str[len(str)-1] == ' ' {
-		str = str[:len(str)-1]
-	}
-	return str
+
+	body = e.colorKeywords(body)
+
+	return e.getMatchingLines(body), nil
 }
 
-func (e Engine) CollectResults() ([]string, error) {
-
+func (e Engine) getBody() (string, error) {
 	response, err := http.Get(e.url)
 	if err != nil {
-		return []string{}, err
+		return "", err
 	}
 	defer response.Body.Close()
 
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
-		return []string{}, err
+		return "", err
 	}
+	return string(body), nil
+}
 
-	// Colorizar todas as keywords que estao no corpo
+func (e Engine) colorKeywords(str string) string {
 	for _, keyword := range e.keywords {
-		if strings.Contains(string(body), keyword) {
-			body = []byte(strings.ReplaceAll(string(body), keyword, green+keyword+reset))
-		}
+		str = strings.ReplaceAll(str, keyword, green+keyword+reset)
 	}
+	return str
+}
 
+func (e Engine) getMatchingLines(str string) []string {
 	var result []string
 
-	// Converter o body para um scanner para facilitar a leitura
-	scanner := bufio.NewScanner(strings.NewReader(string(body)))
+	// Scanner para percorrer cada linha da string
+	scanner := bufio.NewScanner(strings.NewReader(str))
 
-	// Percorrer cada linha do body
 	for scanner.Scan() {
-
 		line := scanner.Text()
-
-		for _, keyword := range e.keywords {
-			if strings.Contains(line, keyword) {
-				result = append(result, trimSpaces(line))
-				break
-			}
+		if e.containsKeyword(line) {
+			result = append(result, strings.TrimSpace(line))
 		}
 	}
-	return result, nil
+
+	return result
+}
+
+func (e Engine) containsKeyword(str string) bool {
+	for _, keyword := range e.keywords {
+		if strings.Contains(str, keyword) {
+			return true
+		}
+	}
+	return false
 }
