@@ -28,7 +28,6 @@ jobs:
             go build -ldflags="-w -s" -o scrap main.go
           fi
       - name: Compress binary with UPX
-        if: matrix.os == 'linux'
         run: |
           if [ "${{ matrix.os }}" = "windows" ]; then
             upx --best scrap.exe
