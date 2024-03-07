@@ -1,33 +1,37 @@
 name: Build
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [push, pull_request]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [linux, android]
-        arch: [arm64, amd64]
+        os: [linux, windows, android]
+        arch: [amd64, arm64]
+        exclude:
+          - os: windows
+            arch: arm64
+          - os: android
+            arch: amd64
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-go@v5
-      with:
-        go-version: '1.21.6'
-        
-    - name: Build
-      env:
-        GOOS: ${{ matrix.os }}
-        GOARCH: ${{ matrix.arch }}
-      run: go build -v -o scrap
+      - uses: actions/checkout@v2
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.17.x'
+      - name: Build
+        run: |
+          env GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -o scrap main.go
+      - name: Install UPX
+        if: matrix.os == 'linux'
+        run: sudo apt-get install upx
+      - name: Compress binary with UPX
+        if: matrix.os == 'linux'
+        run: upx --best scrap
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: scrap-${{ matrix.os }}-${{ matrix.arch }}
+          path: scrap
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: scrap-${{ matrix.os }}-${{ matrix.arch }}
-        path: scrap
