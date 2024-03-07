@@ -27,9 +27,6 @@ jobs:
           else
             go build -ldflags="-w -s" -o scrap main.go
           fi
-      - name: Install UPX
-        if: matrix.os == 'linux'
-        run: sudo apt-get install upx
       - name: Compress binary with UPX
         if: matrix.os == 'linux'
         run: |
