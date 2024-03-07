@@ -27,13 +27,7 @@ jobs:
           else
             go build -ldflags="-w -s" -o scrap main.go
           fi
-      - name: Compress binary with UPX
-        run: |
-          if [ "${{ matrix.os }}" = "windows" ]; then
-            upx --best scrap.exe
-          else
-            upx --best scrap
-          fi
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
