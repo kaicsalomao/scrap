@@ -15,7 +15,6 @@ func collectArgs() ([]string, error) {
 
 	flag.Usage = func() {
 		fmt.Println(HELP_MSG)
-		flag.PrintDefaults()
 	}
 
 	flag.Parse()
@@ -37,7 +36,7 @@ func collectArgs() ([]string, error) {
 func main() {
 	args, err := collectArgs()
 	if err != nil {
-		fmt.Println(err)
+		flag.Usage()
 		os.Exit(1)
 	}
 
