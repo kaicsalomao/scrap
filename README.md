@@ -1,6 +1,6 @@
 <div>
     <div align="center">
-        <img src="imgs/logo.svg" width="100" height="100"/>
+        <img src="imgs/logo.png" width="100" height="100"/>
         <h2>Scrap</h2>
         <p><strong>Uma ferramenta CLI que permite fazer web scraping diretamente da linha de comando</strong></p>
         <!-- Latest release -->
